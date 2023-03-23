@@ -6,6 +6,25 @@
 <h1>Input Form</h1>
 <form method="post" action="{{ url_for('index') }}">
     {{ form.csrf_token }}
-    {{ form.input_text.label }} {{ form.input
+    {{ form.input_text.label }} {{ form.input_text() }}
+    <input type="submit" value="Submit">
+</form>
 
-        
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class="flashes">
+    {% for message in messages %}
+    <li class="{{ message|lower }}">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+{% if input_text and timestamp %}
+<div class="output">
+    <h2>Output:</h2>
+    <p>{{ input_text }}</p>
+    <p class="timestamp">{{ timestamp }}</p>
+</div>
+{% endif %}
+{% endblock %}
